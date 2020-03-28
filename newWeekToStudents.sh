@@ -60,6 +60,6 @@ else
 
   # Reason we add this is for gitlab webhook to slack notification
   git add .
-  git commit -m "Added added new week $1" # Reason we add this is for gitlab webhook to slack notification
+  git commit -m "Added new week $1" # Reason we add this is for gitlab webhook to slack notification
   git push origin master
 fi
