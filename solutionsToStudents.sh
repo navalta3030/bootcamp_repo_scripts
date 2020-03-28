@@ -8,19 +8,35 @@ function reFormatNum() {
   fi
 }
 
-if [[ "$#" -ne 3 ]]; then
-  echo "Usage: ./solutionsToStudents.sh [Week Number] [Start Activity] [End Activity]"
+userDesktopWorkspace="/c/Users/$(whoami)/Desktop"
+pathToContent="${userDesktopWorkspace}/UCDavis/FullStack-Lesson-Plans/01-Class-Content"
+pathToStudentRepo="${userDesktopWorkspace}/UCDavis/ucd-sac-fsf-pt-03-2020-u-c"
+
+if [[ "$#" -ne 2 ]]; then
+  echo "Usage: ./solutionsToStudents.sh [Week Number] [End Activity]"
 else
-  pathToContent="/Users/rasenin/Desktop/ucd-boot-camp/gitlab/December/fullstack-ground/01-Class-Content"
-  pathToStudentRepo="/Users/rasenin/Desktop/ucd-boot-camp/gitlab/December/UCD-SAC-FSF-PT-12-2019-U-C"
+  # pull latest content from source
+  cd $pathToContent
+  git reset --hard
+  git clean -fd
+  git pull origin master
+
+  # clean the gitlab repository before
+  cd $pathToStudentRepo
+  git reset --hard
+  git clean -fd
 
   weekNum=$(reFormatNum $1)
 
-  for num in $(seq $2 $3); do
+  for num in $(seq 0 $2); do
     activityNum=$(reFormatNum $num)
 
+    # verify that we have a solved folder within the activity
     if [[ -n "$(ls ${pathToContent}/${weekNum}*/01*/${activityNum}*/Solved 2>/dev/null)" ]]; then
+
+      # copy the content recursively 
       cp -r ${pathToContent}/${weekNum}*/01*/${activityNum}*/Solved ${pathToStudentRepo}/${weekNum}*/01*/${activityNum}*
+      # still not sure what this one is for
       pathToSolved=$(cd ${pathToContent}/${weekNum}*/01*/${activityNum}*/Solved; pwd)
 
       source=$(echo ${pathToContent}/${weekNum}*/01*/${activityNum}*/Solved | sed -E 's/.*Activities\/([0-9]+.*)/\1/')
@@ -46,4 +62,9 @@ else
       printf '\n\n'
     fi 
   done
+
+  # Reason we add this is for gitlab webhook to slack notification
+  git add .
+  git commit -m "Added activity $2 soln for week $1" # Reason we add this is for gitlab webhook to slack notification
+  git push origin master
 fi
