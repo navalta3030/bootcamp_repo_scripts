@@ -9,7 +9,7 @@ function reFormatNum() {
 }
 
 userDesktopWorkspace="/c/Users/$(whoami)/Desktop"
-pathToContent="${userDesktopWorkspace}/UCDavis/FullStack-Lesson-Plans/01-Class-Content"
+pathToContent="${userDesktopWorkspace}/UCDavis/fullstack-ground/01-Class-Content"
 pathToStudentRepo="${userDesktopWorkspace}/UCDavis/ucd-sac-fsf-pt-03-2020-u-c"
 
 if [[ "$#" -ne 1  ]]; then
