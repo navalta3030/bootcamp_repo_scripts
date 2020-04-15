@@ -56,7 +56,7 @@ else
   printf '\n\n'
 
   # Copy the Homework and other utilities but exclude the 01-Activities(already done) and also the solution and grading rubrics.
-  rsync -av --progress ${pathToContent}/${weekNum}* ${pathToStudentRepo} --exclude 01-Activities --exclude Solutions --exclude gradingRubrics > /dev/null
+  rsync -av --progress ${pathToContent}/${weekNum}* ${pathToStudentRepo} --exclude 01-Activities --exclude Master --exclude gradingRubrics > /dev/null
 
   # Reason we add this is for gitlab webhook to slack notification
   git add .
