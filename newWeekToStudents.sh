@@ -10,7 +10,7 @@ function reFormatNum() {
 
 userDesktopWorkspace="/c/Users/$(whoami)/Desktop"
 pathToContent="${userDesktopWorkspace}/UCDavis/fullstack-ground/01-Class-Content"
-pathToStudentRepo="${userDesktopWorkspace}/UCDavis/ucd-sac-fsf-pt-03-2020-u-c"
+pathToStudentRepo="${userDesktopWorkspace}/UCDavis/ucd-sac-fsf-pt-06-2020-u-c"
 
 if [[ "$#" -ne 1  ]]; then
   echo "Usage: ./activitiesToStudents.sh [Week Number]"
@@ -26,7 +26,7 @@ else
   cd $pathToStudentRepo
   git reset --hard
   git clean -fd
-
+  git pull origin master
   weekNum=$(reFormatNum $1)
 
   # initiate new week name of folder (IE: pathToContent/02-css-bootstrap)
